@@ -1,11 +1,13 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { DatePipe} from '@angular/common';
-import {AuthService} from "../../services/auth.service";
-import {User} from "../../model/user";
-import {Router} from "@angular/router";
-import {MatPaginator, MatTableDataSource, MatSort} from '@angular/material';
-import {Transaction} from "../../model/transaction";
-import {CourseService} from "../../services/course.service";
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {DatePipe} from '@angular/common';
+import {AuthService} from '../../services/auth.service';
+import {User} from '../../model/user';
+import {Router} from '@angular/router';
+import {Transaction} from '../../model/transaction';
+import {CourseService} from '../../services/course.service';
+import {MatTableDataSource} from '@angular/material/table';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
 
 @Component({
   selector: 'app-profile',
@@ -20,12 +22,13 @@ export class ProfileComponent implements OnInit {
   @ViewChild(MatSort) sort: MatSort;
 
   currentUser: User;
-  constructor(public authService: AuthService, public router: Router, private courseService :CourseService) {
+
+  constructor(public authService: AuthService, public router: Router, private courseService: CourseService) {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
   }
 
   ngOnInit() {
-    if(!this.currentUser){
+    if (!this.currentUser) {
       return;
     }
     this.courseService.filterTransactions(this.currentUser.id).subscribe(data => {
