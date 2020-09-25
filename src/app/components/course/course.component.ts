@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import {Component, OnInit, ViewChild} from '@angular/core';
 import {User} from '../../model/user';
 import {Log} from '../../model/log';
 import {Ip} from '../../model/ip';
@@ -24,6 +24,7 @@ export class CourseComponent implements OnInit {
   dataSource: MatTableDataSource<string> = new MatTableDataSource();
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+
   constructor(private courseService: CourseService, private logService: LogService,
               private router: Router, private route: ActivatedRoute) {
     this.currentCourse = JSON.parse(localStorage.getItem('currentCourse'));
@@ -31,16 +32,16 @@ export class CourseComponent implements OnInit {
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      if (params.has('id')){
+      if (params.has('id')) {
         this.courseId = params.get('id');
         this.currentLog = new Log();
         this.currentLog.courseId = this.courseId;
         this.logService.getSummaryOfCourse(this.courseId).subscribe(data => {
-          if (data){
-           this.courseHitCount = data.hitCount;
-         }else{
-           this.courseHitCount = 0;
-         }
+          if (data) {
+            this.courseHitCount = data.hitCount;
+          } else {
+            this.courseHitCount = 0;
+          }
 
         });
         this.logService.getIpClient().subscribe((data: Ip) => {
@@ -52,7 +53,7 @@ export class CourseComponent implements OnInit {
     });
   }
 
-  hit(ip){
+  hit(ip) {
     this.logService.createLog(this.currentLog).subscribe(data => {
       console.log('hit : ' + ip);
     });
@@ -63,7 +64,7 @@ export class CourseComponent implements OnInit {
     this.dataSource.paginator = this.paginator;
   }
 
-  findStudents(){
+  findStudents() {
     this.courseService.filterStudents(this.courseId).subscribe(data => {
       this.dataSource.data = data;
     });
