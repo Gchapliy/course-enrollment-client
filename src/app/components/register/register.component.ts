@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import {AuthService} from "../../services/auth.service";
-import {Router} from "@angular/router";
-import {User} from "../../model/user";
+import {AuthService} from '../../services/auth.service';
+import {Router} from '@angular/router';
+import {User} from '../../model/user';
 
 @Component({
   selector: 'app-register',
@@ -9,15 +9,15 @@ import {User} from "../../model/user";
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent implements OnInit {
-  user: User=new User();
+  user: User = new User();
   currentUser: User;
-  errorMessage:string;
-  constructor(private authService :AuthService, private router: Router) {
+  errorMessage: string;
+  constructor(private authService: AuthService, private router: Router) {
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
   }
 
   ngOnInit() {
-    if(this.currentUser){
+    if (this.currentUser){
       this.router.navigate(['/profile']);
     }
   }
@@ -27,9 +27,8 @@ export class RegisterComponent implements OnInit {
       this.router.navigate(['/login']);
     }, err => {
       console.log(err);
-      this.errorMessage = "username already exist";
+      this.errorMessage = 'username already exist';
     }
-  )
+  );
 }
-
 }
